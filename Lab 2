@@ -1,0 +1,50 @@
+import random
+from art import *
+
+# You were right this lab was a bit of a challange. 
+# I had to look some stuff up and refer to the lecture notes but i got it!
+
+MIN = 1
+MAX = 25
+win_num = random.randint(MIN, MAX)
+
+guess_count = 1
+max_guesses = 5
+bonus = False
+you_win = False
+
+tprint("GUESS THE NUMBER! \n")
+print(f"Guess the number between {MIN} and {MAX}. You have {max_guesses} guesses to get it right!")
+
+# Main
+while guess_count <= max_guesses:
+    guess = input(f"Enter a number between {MIN} and {MAX}: ")
+
+    if guess.isdigit():
+        guess = int(guess)
+        if guess < MIN or guess > MAX:
+            print(f"Um hello? I said between {MIN} and {MAX}.")
+            continue
+    else:
+        print("Thats not a number silly! Please enter a valid number.")
+        continue
+
+    if guess == win_num:
+        you_win = True
+        tprint("!!!CORRECT!!!")
+        print(f"Ayeee you got it right! It was {win_num}! You win! Your prize is bragging rights!")
+        break
+    elif guess >= win_num - 3 and guess <= win_num + 3 and bonus == False:
+        print("You're soooo close! You guessed with 3 of the number! You earned yourself an extra guess!")
+        max_guesses += 1
+        bonus = True
+    elif guess >= win_num - 3 and guess <= win_num + 3 and bonus == True:
+        print("You're close, but you've already gotten your extra guess.")
+    else:
+        print("*Very loud incorrect buzzer* Try again!")
+
+    guess_count += 1
+    print(f"You have {max_guesses - guess_count + 1} guesses left!")
+
+if you_win == False and guess_count > max_guesses:
+    print(f"HAHAHA LOOK WHOS OUT OF GUESSES!!! The number was {win_num}. Better luck next time dude!")
